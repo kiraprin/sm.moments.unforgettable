@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página Romântica Protegida</title>
+  <style>
+    body, html {
+      margin: 0; padding: 0; height: 100%; width: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #2c2b75, #4b0082);
+      color: #fff; text-align: center;
+    }
+    /* Overlay de senha */
+    #overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #800080;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 9999; padding: 20px;
+    }
+    #overlay::before, #overlay::after {
+      content: "💖 💖 💖 💖 💖 💖 💖";
+      font-size: 2rem; margin: 10px 0;
+    }
+    #overlay h2 { margin: 0 0 10px; font-size: 2rem; }
+    #overlay input {
+      padding: 10px 15px; font-size: 1rem;
+      border: none; border-radius: 5px;
+      margin-bottom: 15px; width: 200px;
+      text-align: center;
+    }
+    #overlay button {
+      padding: 10px 20px; font-size: 1rem;
+      border: none; border-radius: 5px;
+      cursor: pointer; background: #fff;
+      color: #800080; font-weight: bold;
+    }
+    /* Conteúdo protegido */
+    #content { display: none; }
+    header { padding: 40px 20px; }
+    header h1 { font-size: 3rem; margin: 0; }
+    main {
+      max-width: 800px; margin: 40px auto; padding: 20px;
+      background: rgba(255,255,255,0.1); border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .texto { font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; }
+    .upload label {
+      background: rgba(255,255,255,0.2);
+      padding: 10px 20px; border-radius: 10px;
+      cursor: pointer; display: inline-block;
+      margin: 10px;
+    }
+    .upload input { display: none; }
+    .foto, audio {
+      display: block; margin: 20px auto 30px;
+      max-width: 100%;
+    }
+    footer { padding: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Overlay de senha -->
+  <div id="overlay">
+    <h2>Digite o código de acesso</h2>
+    <input type="password" id="accessCode" placeholder="Código secreto">
+    <button id="btnEnter">Entrar</button>
+  </div>
+
+  <!-- Conteúdo protegido -->
+  <div id="content">
+    <header>
+      <h1>❤ SM: Unforgettable moments❤</h1>
+      <p>✨🌹  Welcome to our special space❤️! 🌹✨</p>
+    </header>
+
+    <main>
+      <div class="texto">
+        <p>"Feliz dia dos namorados meu amor, Feliz 08 meses meu anjo, Feliz os proximos meses, anos e tudo mais. Obrigada ter entrado na minha vida, juro você foi a melhor coisa que ja aconteceu em todos os meus 17 anos, eu me sinto tão mais tão sortuda por ter te encontrado "primeiro" do que qualquer outra garota, você é o ser humano mais incrivel, maravilhoso, inteligente, carinhoso, lindo, engraçado e perfeito que eu ja conheci, nunca me deixe bebê, eu quero construir uma familia com você. Eu te amo mais que tudo na minha vida, você é incrivel demias, amo você meu amor nunca deixe algo ou alguém te abalar, você consegue e vai conseguir tudo o que quiser, eu acredito em você.💖💌"</p>
+      </div>
+
+      <!-- Seletor de foto -->
+      <div class="upload">
+        <label for="photoInput">Escolha uma foto 💕</label>
+        <input type="file" id="photoInput" accept="image/*">
+      </div>
+      <img class="foto" id="fotoPreview" src="caminho/para/sua-foto.jpg" alt="Foto Romântica">
+
+      <!-- Seletor de música -->
+      <div class="upload">
+        <label for="musicInput">Escolha uma música 🎵</label>
+        <input type="file" id="musicInput" accept="audio/*">
+      </div>
+      <audio
+      </audio>
+    </main>
+
+    <footer>
+      <p>😊💜 From: Your Princess, to: My Fighter Husband: ! 💙😊</p>
+    </footer>
+  </div>
+#ffffff
+  <script>
+    // Código de acesso
+    const secretCode = "SMforever";
+    const overlay    = document.getElementById('overlay');
+    const content    = document.getElementById('content');
+    const accessInput= document.getElementById('accessCode');
+    const btnEnter   = document.getElementById('btnEnter');
+
+    function tryAccess() {
+      if (accessInput.value.trim() === secretCode) {
+        overlay.style.display = 'none';
+        content.style.display = 'block';
+      } else {
+        alert('Código incorreto. Tente novamente!');
+        accessInput.value = '';
+        accessInput.focus();
+      }
+    }
+    btnEnter.addEventListener('click', tryAccess);
+    accessInput.addEventListener('keyup', e => {
+      if (e.key === 'Enter') tryAccess();
+    });
+
+    // Pré‑visualização de foto
+    const photoInput  = document.getElementById('photoInput');
+    const fotoPreview = document.getElementById('fotoPreview');
+    photoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => fotoPreview.src = ev.target.result;
+      reader.readAsDataURL(file);
+    });
+
+    // Seleção de música
+    const musicInput  = document.getElementById('musicInput');
+    const musicPlayer = document.getElementById('musicPlayer');
+    musicInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      // Remove source antigo e define novo
+      musicPlayer.src = url;
+      musicPlayer.load();
+      musicPlayer.play();
+    });
+  </script>
+</body>
+</html>
